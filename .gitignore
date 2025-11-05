@@ -41,6 +41,7 @@ example/.dart_tool/
 
 # Android local configuration
 example/android/local.properties
+example/android/.gradle/
 
 # Android generated files
 example/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
