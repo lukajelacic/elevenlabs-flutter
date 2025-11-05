@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+.env
 
 # IntelliJ related
 *.iml
@@ -26,6 +27,27 @@ migrate_working_dir/
 /pubspec.lock
 **/doc/api/
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
 /build/
 /coverage/
+
+# Example app specific ignores
+example/pubspec.lock
+example/build/
+example/.flutter-plugins
+example/.flutter-plugins-dependencies
+example/.dart_tool/
+
+# Android local configuration
+example/android/local.properties
+
+# Android generated files
+example/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+
+# iOS generated files
+example/ios/Flutter/Generated.xcconfig
+example/ios/Flutter/flutter_export_environment.sh
+example/ios/Flutter/ephemeral/
+example/ios/Runner/GeneratedPluginRegistrant.h
+example/ios/Runner/GeneratedPluginRegistrant.m

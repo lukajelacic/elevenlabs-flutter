@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import '../models/conversation_config.dart';
 
 /// Service for fetching conversation tokens from the ElevenLabs API
 class TokenService {
