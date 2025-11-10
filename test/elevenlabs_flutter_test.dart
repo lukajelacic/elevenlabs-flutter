@@ -1,6 +1,5 @@
-import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:elevenlabs_flutter/elevenlabs_flutter.dart';
+import 'package:elevenlabs_agents/elevenlabs_agents.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -2,7 +2,7 @@
 
 # ElevenLabs Flutter SDK
 
-[![pub package](https://img.shields.io/pub/v/elevenlabs_flutter.svg)](https://pub.dev/packages/elevenlabs_flutter)
+[![pub package](https://img.shields.io/pub/v/elevenlabs_agents.svg)](https://pub.dev/packages/elevenlabs_agents)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Official Flutter SDK for the [ElevenLabs Agents Platform](https://elevenlabs.io). Build voice-enabled applications with real-time bidirectional audio communication powered by WebRTC via LiveKit.
@@ -44,7 +44,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  elevenlabs_flutter: ^0.1.0
+  elevenlabs_agents: ^0.1.0
 ```
 
 Install dependencies:
@@ -97,7 +97,7 @@ Here's a minimal example showing basic voice conversation functionality:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:elevenlabs_flutter/elevenlabs_flutter.dart';
+import 'package:elevenlabs_agents/elevenlabs_agents.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class VoiceAssistant extends StatefulWidget {

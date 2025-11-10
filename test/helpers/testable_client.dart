@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'package:elevenlabs_flutter/elevenlabs_flutter.dart';
+import 'package:elevenlabs_agents/elevenlabs_agents.dart';
 import 'package:flutter/foundation.dart';
-import 'package:elevenlabs_flutter/src/models/conversation_status.dart';
 
 /// A testable version of ConversationClient that allows dependency injection
 class TestableConversationClient extends ChangeNotifier {

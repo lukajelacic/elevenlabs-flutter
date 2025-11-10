@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:elevenlabs_flutter/elevenlabs_flutter.dart';
+import 'package:elevenlabs_agents/elevenlabs_agents.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -299,7 +299,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       gradient: RadialGradient(
                         colors: [
                           (_client.isSpeaking ? Colors.black : Colors.grey[400]!)
-                              .withOpacity(0.2),
+                              .withValues(alpha: 0.2),
                           Colors.transparent,
                         ],
                       ),
@@ -532,10 +532,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(_client.status).withOpacity(0.1),
+                    color: _getStatusColor(_client.status).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: _getStatusColor(_client.status).withOpacity(0.3),
+                      color: _getStatusColor(_client.status).withValues(alpha: 0.3),
                     ),
                   ),
                   child: Row(

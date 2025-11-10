@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:elevenlabs_flutter/elevenlabs_flutter.dart';
+import 'package:elevenlabs_agents/elevenlabs_agents.dart';
 import 'helpers/testable_client.dart';
 
 void main() {
