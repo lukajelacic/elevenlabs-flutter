@@ -86,9 +86,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   void _initializeClient() {
     _client = ConversationClient(
-      clientTools: {
-        'logMessage': LogMessageTool(),
-      },
+      clientTools: {'logMessage': LogMessageTool()},
       callbacks: ConversationCallbacks(
         onConnect: ({required conversationId}) {
           debugPrint('✅ Connected: $conversationId');
@@ -140,7 +138,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
         },
         onUnhandledClientToolCall: (toolCall) {
           debugPrint('⚠️ Unhandled tool call: ${toolCall.toolName}');
-          _showSnackBar('Tool not implemented: ${toolCall.toolName}', Colors.orange);
+          _showSnackBar(
+            'Tool not implemented: ${toolCall.toolName}',
+            Colors.orange,
+          );
         },
       ),
     );
@@ -181,10 +182,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
     }
 
     try {
-      await _client.startSession(
-        agentId: agentId,
-        userId: 'demo-user',
-      );
+      await _client.startSession(agentId: agentId, userId: 'demo-user');
     } catch (e) {
       _showSnackBar('Failed to start: $e', Colors.red);
     }
@@ -276,9 +274,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.grey[300]!,
-                          ),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -301,7 +297,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
-                          (_client.isSpeaking ? Colors.black : Colors.grey[400]!)
+                          (_client.isSpeaking
+                                  ? Colors.black
+                                  : Colors.grey[400]!)
                               .withValues(alpha: 0.2),
                           Colors.transparent,
                         ],
@@ -318,7 +316,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       child: Icon(
                         _client.isSpeaking ? Icons.graphic_eq : Icons.mic,
                         size: 43,
-                        color: _client.isSpeaking ? Colors.white : Colors.grey[700],
+                        color: _client.isSpeaking
+                            ? Colors.white
+                            : Colors.grey[700],
                       ),
                     ),
                   ),
@@ -340,9 +340,15 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   height: 56,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: isDisconnected ? _startConversation : isConnected ? _endConversation : null,
+                    onPressed: isDisconnected
+                        ? _startConversation
+                        : isConnected
+                        ? _endConversation
+                        : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isConnected ? Colors.red[600] : Colors.black,
+                      backgroundColor: isConnected
+                          ? Colors.red[600]
+                          : Colors.black,
                       foregroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -351,7 +357,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       disabledBackgroundColor: Colors.grey[300],
                     ),
                     child: Text(
-                      isConnected ? 'Disconnect' : isDisconnected ? 'Connect' : 'Connecting...',
+                      isConnected
+                          ? 'Disconnect'
+                          : isDisconnected
+                          ? 'Connect'
+                          : 'Connecting...',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -373,9 +383,13 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       icon: Icon(_client.isMuted ? Icons.mic_off : Icons.mic),
                       label: Text(_client.isMuted ? 'Unmute' : 'Mute'),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: _client.isMuted ? Colors.red[600] : Colors.grey[700],
+                        foregroundColor: _client.isMuted
+                            ? Colors.red[600]
+                            : Colors.grey[700],
                         side: BorderSide(
-                          color: (_client.isMuted ? Colors.red[600] : Colors.grey[400])!,
+                          color: (_client.isMuted
+                              ? Colors.red[600]
+                              : Colors.grey[400])!,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -404,13 +418,19 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             children: [
                               Expanded(
                                 child: OutlinedButton.icon(
-                                  onPressed: () => _client.sendFeedback(isPositive: true),
-                                  icon: const Icon(Icons.thumb_up_outlined, size: 20),
+                                  onPressed: () =>
+                                      _client.sendFeedback(isPositive: true),
+                                  icon: const Icon(
+                                    Icons.thumb_up_outlined,
+                                    size: 20,
+                                  ),
                                   label: const Text('Good'),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: Colors.green[700],
                                     side: BorderSide(color: Colors.green[400]!),
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 12,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -420,13 +440,19 @@ class _ConversationScreenState extends State<ConversationScreen> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: OutlinedButton.icon(
-                                  onPressed: () => _client.sendFeedback(isPositive: false),
-                                  icon: const Icon(Icons.thumb_down_outlined, size: 20),
+                                  onPressed: () =>
+                                      _client.sendFeedback(isPositive: false),
+                                  icon: const Icon(
+                                    Icons.thumb_down_outlined,
+                                    size: 20,
+                                  ),
                                   label: const Text('Bad'),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: Colors.red[700],
                                     side: BorderSide(color: Colors.red[400]!),
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 12,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -450,7 +476,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
                         TextField(
                           controller: _messageController,
                           maxLines: 3,
-                          style: const TextStyle(fontSize: 14, color: Colors.black),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                          ),
                           onChanged: (_) => _client.sendUserActivity(),
                           onSubmitted: (_) => _sendMessage(),
                           textInputAction: TextInputAction.send,
@@ -464,9 +493,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                color: Colors.grey[300]!,
-                              ),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -488,7 +515,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                   backgroundColor: Colors.black,
                                   foregroundColor: Colors.white,
                                   elevation: 0,
-                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -509,7 +538,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor: Colors.grey[700],
                                   side: BorderSide(color: Colors.grey[400]!),
-                                  padding: const EdgeInsets.symmetric(vertical: 14),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -533,12 +564,19 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 // Status Indicator
                 const SizedBox(height: 32),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(_client.status).withValues(alpha: 0.1),
+                    color: _getStatusColor(
+                      _client.status,
+                    ).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: _getStatusColor(_client.status).withValues(alpha: 0.3),
+                      color: _getStatusColor(
+                        _client.status,
+                      ).withValues(alpha: 0.3),
                     ),
                   ),
                   child: Row(
