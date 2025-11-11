@@ -38,15 +38,12 @@ class ClientToolCall {
 class InterruptionEvent {
   final int eventId;
 
-  InterruptionEvent({
-    required this.eventId,
-  });
+  InterruptionEvent({required this.eventId});
 
   factory InterruptionEvent.fromJson(Map<String, dynamic> json) {
-    final interruptionEvent = json['interruption_event'] as Map<String, dynamic>;
-    return InterruptionEvent(
-      eventId: interruptionEvent['event_id'] as int,
-    );
+    final interruptionEvent =
+        json['interruption_event'] as Map<String, dynamic>;
+    return InterruptionEvent(eventId: interruptionEvent['event_id'] as int);
   }
 }
 
@@ -58,10 +55,7 @@ class AgentChatResponsePart {
   /// Type of the text response part: "start", "delta", or "stop"
   final String type;
 
-  AgentChatResponsePart({
-    required this.text,
-    required this.type,
-  });
+  AgentChatResponsePart({required this.text, required this.type});
 
   factory AgentChatResponsePart.fromJson(Map<String, dynamic> json) {
     final textResponsePart = json['text_response_part'] as Map<String, dynamic>;
@@ -90,7 +84,8 @@ class ConversationMetadata {
   });
 
   factory ConversationMetadata.fromJson(Map<String, dynamic> json) {
-    final event = json['conversation_initiation_metadata_event'] as Map<String, dynamic>;
+    final event =
+        json['conversation_initiation_metadata_event'] as Map<String, dynamic>;
     return ConversationMetadata(
       conversationId: event['conversation_id'] as String,
       agentOutputAudioFormat: event['agent_output_audio_format'] as String,
@@ -104,9 +99,7 @@ class AsrInitiationMetadata {
   /// Raw metadata as a map
   final Map<String, dynamic> metadata;
 
-  AsrInitiationMetadata({
-    required this.metadata,
-  });
+  AsrInitiationMetadata({required this.metadata});
 
   factory AsrInitiationMetadata.fromJson(Map<String, dynamic> json) {
     return AsrInitiationMetadata(
@@ -182,12 +175,11 @@ class McpConnectionStatus {
   /// List of integrations
   final List<McpIntegration> integrations;
 
-  McpConnectionStatus({
-    required this.integrations,
-  });
+  McpConnectionStatus({required this.integrations});
 
   factory McpConnectionStatus.fromJson(Map<String, dynamic> json) {
-    final mcpConnectionStatus = json['mcp_connection_status'] as Map<String, dynamic>;
+    final mcpConnectionStatus =
+        json['mcp_connection_status'] as Map<String, dynamic>;
     final integrationsList = mcpConnectionStatus['integrations'] as List;
     return McpConnectionStatus(
       integrations: integrationsList
@@ -254,7 +246,8 @@ class AgentToolResponse {
   });
 
   factory AgentToolResponse.fromJson(Map<String, dynamic> json) {
-    final agentToolResponse = json['agent_tool_response'] as Map<String, dynamic>;
+    final agentToolResponse =
+        json['agent_tool_response'] as Map<String, dynamic>;
     return AgentToolResponse(
       toolName: agentToolResponse['tool_name'] as String,
       toolCallId: agentToolResponse['tool_call_id'] as String,
@@ -264,4 +257,3 @@ class AgentToolResponse {
     );
   }
 }
-

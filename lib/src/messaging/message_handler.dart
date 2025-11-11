@@ -153,10 +153,7 @@ class MessageHandler {
     if (transcription != null) {
       final transcript = transcription['transcript'] as String?;
       if (transcript != null && transcript.isNotEmpty) {
-        callbacks.onMessage?.call(
-          message: transcript,
-          source: Role.user,
-        );
+        callbacks.onMessage?.call(message: transcript, source: Role.user);
       }
     }
   }
@@ -172,10 +169,7 @@ class MessageHandler {
 
       final text = response['agent_response'] as String?;
       if (text != null && text.isNotEmpty) {
-        callbacks.onMessage?.call(
-          message: text,
-          source: Role.ai,
-        );
+        callbacks.onMessage?.call(message: text, source: Role.ai);
       }
     }
   }
@@ -210,10 +204,7 @@ class MessageHandler {
     final eventId = pingEvent?['event_id'];
 
     if (eventId != null) {
-      liveKit.sendMessage({
-        'type': 'pong',
-        'event_id': eventId,
-      });
+      liveKit.sendMessage({'type': 'pong', 'event_id': eventId});
     }
   }
 
@@ -243,7 +234,6 @@ class MessageHandler {
     String toolCallId,
     ClientToolResult result,
   ) async {
-
     await liveKit.sendMessage({
       'type': 'client_tool_result',
       'tool_call_id': toolCallId,
@@ -281,7 +271,9 @@ class MessageHandler {
   }
 
   void _handleTentativeAgentResponse(Map<String, dynamic> json) {
-    final event = json['tentative_agent_response_internal_event'] as Map<String, dynamic>?;
+    final event =
+        json['tentative_agent_response_internal_event']
+            as Map<String, dynamic>?;
     final response = event?['tentative_agent_response'] as String?;
     if (response != null) {
       callbacks.onTentativeAgentResponse?.call(response: response);
@@ -297,7 +289,8 @@ class MessageHandler {
   }
 
   void _handleTentativeUserTranscript(Map<String, dynamic> json) {
-    final event = json['tentative_user_transcription_event'] as Map<String, dynamic>?;
+    final event =
+        json['tentative_user_transcription_event'] as Map<String, dynamic>?;
     final transcript = event?['user_transcript'] as String?;
     final eventId = event?['event_id'] as int?;
     if (transcript != null && eventId != null) {
@@ -321,7 +314,8 @@ class MessageHandler {
   }
 
   void _handleAgentResponseCorrection(Map<String, dynamic> json) {
-    final event = json['agent_response_correction_event'] as Map<String, dynamic>?;
+    final event =
+        json['agent_response_correction_event'] as Map<String, dynamic>?;
     if (event != null) {
       // Update event ID for feedback tracking
       final eventId = event['event_id'] as int?;
@@ -352,4 +346,3 @@ class MessageHandler {
     stopListening();
   }
 }
-

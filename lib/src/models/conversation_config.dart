@@ -53,12 +53,7 @@ class ConversationOverrides {
   /// Client configuration overrides
   final ClientOverrides? client;
 
-  ConversationOverrides({
-    this.agent,
-    this.tts,
-    this.conversation,
-    this.client,
-  });
+  ConversationOverrides({this.agent, this.tts, this.conversation, this.client});
 
   Map<String, dynamic> toJson() {
     return {
@@ -173,7 +168,8 @@ class ConversationSettingsOverrides {
     return {
       if (maxDurationSeconds != null)
         'max_duration_seconds': maxDurationSeconds,
-      if (turnTimeoutSeconds != null) 'turn_timeout_seconds': turnTimeoutSeconds,
+      if (turnTimeoutSeconds != null)
+        'turn_timeout_seconds': turnTimeoutSeconds,
       if (textOnly != null) 'text_only': textOnly,
     };
   }
@@ -214,9 +210,5 @@ class DisconnectionDetails {
   /// Optional error code
   final int? code;
 
-  DisconnectionDetails({
-    required this.reason,
-    this.code,
-  });
+  DisconnectionDetails({required this.reason, this.code});
 }
-

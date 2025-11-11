@@ -8,25 +8,17 @@ class MessageSender {
 
   /// Sends a user text message to the agent
   Future<void> sendUserMessage(String text) async {
-    await liveKit.sendMessage({
-      'type': 'user_message',
-      'text': text,
-    });
+    await liveKit.sendMessage({'type': 'user_message', 'text': text});
   }
 
   /// Sends a contextual update to the agent
   Future<void> sendContextualUpdate(String text) async {
-    await liveKit.sendMessage({
-      'type': 'contextual_update',
-      'text': text,
-    });
+    await liveKit.sendMessage({'type': 'contextual_update', 'text': text});
   }
 
   /// Sends a user activity signal
   Future<void> sendUserActivity() async {
-    await liveKit.sendMessage({
-      'type': 'user_activity',
-    });
+    await liveKit.sendMessage({'type': 'user_activity'});
   }
 
   /// Sends feedback for the last agent response
@@ -53,4 +45,3 @@ class MessageSender {
     });
   }
 }
-

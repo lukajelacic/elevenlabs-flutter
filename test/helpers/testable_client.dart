@@ -40,7 +40,9 @@ class TestableConversationClient extends ChangeNotifier {
     Map<String, dynamic>? dynamicVariables,
   }) async {
     if (agentId == null && conversationToken == null) {
-      throw ArgumentError('Either agentId or conversationToken must be provided');
+      throw ArgumentError(
+        'Either agentId or conversationToken must be provided',
+      );
     }
 
     if (_status != ConversationStatus.disconnected) {
@@ -62,7 +64,9 @@ class TestableConversationClient extends ChangeNotifier {
       final connectedCompleter = Completer<void>();
 
       // Listen to connection state
-      _connectionSubscription = liveKitManager.connectionStateStream.listen((state) {
+      _connectionSubscription = liveKitManager.connectionStateStream.listen((
+        state,
+      ) {
         if (state == MockConnectionState.connected) {
           _conversationId = liveKitManager.mockConversationId;
           _setStatus(ConversationStatus.connected);
@@ -76,11 +80,15 @@ class TestableConversationClient extends ChangeNotifier {
       });
 
       // Listen to speaking state
-      _speakingSubscription = liveKitManager.speakingStateStream.listen((speaking) {
+      _speakingSubscription = liveKitManager.speakingStateStream.listen((
+        speaking,
+      ) {
         _isSpeaking = speaking;
         notifyListeners();
         callbacks?.onModeChange?.call(
-          mode: speaking ? ConversationMode.speaking : ConversationMode.listening,
+          mode: speaking
+              ? ConversationMode.speaking
+              : ConversationMode.listening,
         );
       });
 
@@ -194,19 +202,18 @@ class TestableConversationClient extends ChangeNotifier {
 }
 
 /// Mock connection states
-enum MockConnectionState {
-  disconnected,
-  connecting,
-  connected,
-}
+enum MockConnectionState { disconnected, connecting, connected }
 
 /// Mock LiveKit manager for testing
 class MockLiveKitManager {
-  final _connectionStateController = StreamController<MockConnectionState>.broadcast();
+  final _connectionStateController =
+      StreamController<MockConnectionState>.broadcast();
   final _speakingStateController = StreamController<bool>.broadcast();
-  final _messagesController = StreamController<Map<String, dynamic>>.broadcast();
+  final _messagesController =
+      StreamController<Map<String, dynamic>>.broadcast();
 
-  Stream<MockConnectionState> get connectionStateStream => _connectionStateController.stream;
+  Stream<MockConnectionState> get connectionStateStream =>
+      _connectionStateController.stream;
   Stream<bool> get speakingStateStream => _speakingStateController.stream;
   Stream<Map<String, dynamic>> get messagesStream => _messagesController.stream;
 
@@ -272,4 +279,3 @@ class MockTokenService {
     return mockToken;
   }
 }
-

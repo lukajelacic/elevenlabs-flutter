@@ -6,25 +6,21 @@ class TokenService {
   /// API endpoint for token requests
   final String apiEndpoint;
 
-  TokenService({
-    String? apiEndpoint,
-  }) : apiEndpoint = apiEndpoint ?? 'https://api.elevenlabs.io';
+  TokenService({String? apiEndpoint})
+    : apiEndpoint = apiEndpoint ?? 'https://api.elevenlabs.io';
 
   /// Fetches a LiveKit token for public agents
-  Future<({String token})> fetchToken({
-    required String agentId,
-  }) async {
-    final uri = Uri.parse('$apiEndpoint/v1/convai/conversation/token?agent_id=$agentId');
-
+  Future<({String token})> fetchToken({required String agentId}) async {
+    final uri = Uri.parse(
+      '$apiEndpoint/v1/convai/conversation/token?agent_id=$agentId',
+    );
 
     try {
       final response = await http.get(uri);
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
-        return (
-          token: data['token'] as String,
-        );
+        return (token: data['token'] as String);
       }
 
       throw Exception(
@@ -35,4 +31,3 @@ class TokenService {
     }
   }
 }
-

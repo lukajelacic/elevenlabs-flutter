@@ -59,10 +59,10 @@ class ConversationClient extends ChangeNotifier {
     String? websocketUrl,
     ConversationCallbacks? callbacks,
     Map<String, ClientTool>? clientTools,
-  }  )  : _apiEndpoint = apiEndpoint,
-        _websocketUrl = websocketUrl,
-        _callbacks = callbacks,
-        _clientTools = clientTools {
+  }) : _apiEndpoint = apiEndpoint,
+       _websocketUrl = websocketUrl,
+       _callbacks = callbacks,
+       _clientTools = clientTools {
     _initializeServices();
   }
 
@@ -99,7 +99,9 @@ class ConversationClient extends ChangeNotifier {
       onAsrInitiationMetadata: callbacks?.onAsrInitiationMetadata,
       onCanSendFeedbackChange: ({required bool canSendFeedback}) {
         notifyListeners(); // Notify UI that feedback state changed
-        callbacks?.onCanSendFeedbackChange?.call(canSendFeedback: canSendFeedback);
+        callbacks?.onCanSendFeedbackChange?.call(
+          canSendFeedback: canSendFeedback,
+        );
       },
       onUnhandledClientToolCall: callbacks?.onUnhandledClientToolCall,
       onMcpToolCall: callbacks?.onMcpToolCall,
@@ -136,7 +138,9 @@ class ConversationClient extends ChangeNotifier {
     }
 
     if (agentId == null && conversationToken == null) {
-      throw ArgumentError('Either agentId or conversationToken must be provided');
+      throw ArgumentError(
+        'Either agentId or conversationToken must be provided',
+      );
     }
 
     try {
@@ -154,12 +158,12 @@ class ConversationClient extends ChangeNotifier {
         token = conversationToken;
       } else if (agentId != null) {
         // Public agent - fetch token
-        final result = await _tokenService.fetchToken(
-          agentId: agentId,
-        );
+        final result = await _tokenService.fetchToken(agentId: agentId);
         token = result.token;
       } else {
-        throw ArgumentError('Either agentId or conversationToken must be provided');
+        throw ArgumentError(
+          'Either agentId or conversationToken must be provided',
+        );
       }
 
       wsUrl = _websocketUrl ?? 'wss://livekit.rtc.elevenlabs.io';
@@ -172,8 +176,12 @@ class ConversationClient extends ChangeNotifier {
       });
 
       // Listen to agent speaking state from LiveKit
-      _speakingSubscription = _liveKitManager.speakingStateStream.listen((isSpeaking) {
-        _mode = isSpeaking ? ConversationMode.speaking : ConversationMode.listening;
+      _speakingSubscription = _liveKitManager.speakingStateStream.listen((
+        isSpeaking,
+      ) {
+        _mode = isSpeaking
+            ? ConversationMode.speaking
+            : ConversationMode.listening;
         _isSpeaking = isSpeaking;
         notifyListeners();
         _callbacks?.onModeChange?.call(mode: _mode);
@@ -260,12 +268,11 @@ class ConversationClient extends ChangeNotifier {
     notifyListeners();
     _callbacks?.onCanSendFeedbackChange?.call(canSendFeedback: false);
 
-    _messageSender.sendFeedback(
-      isPositive: isPositive,
-      eventId: eventId,
-    ).catchError((e) {
-      _callbacks?.onError?.call('Failed to send feedback', e);
-    });
+    _messageSender
+        .sendFeedback(isPositive: isPositive, eventId: eventId)
+        .catchError((e) {
+          _callbacks?.onError?.call('Failed to send feedback', e);
+        });
   }
 
   /// Sets the microphone mute state
@@ -303,9 +310,7 @@ class ConversationClient extends ChangeNotifier {
   }
 
   void _handleDisconnection(String reason) {
-    _callbacks?.onDisconnect?.call(
-      DisconnectionDetails(reason: reason),
-    );
+    _callbacks?.onDisconnect?.call(DisconnectionDetails(reason: reason));
     _setStatus(ConversationStatus.disconnected);
   }
 
@@ -365,4 +370,3 @@ class ConversationClient extends ChangeNotifier {
     super.dispose();
   }
 }
-

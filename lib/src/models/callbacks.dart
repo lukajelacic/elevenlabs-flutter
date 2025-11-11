@@ -17,7 +17,8 @@ class ConversationCallbacks {
   final void Function(String message, [dynamic context])? onError;
 
   /// Called when a message is received (transcription or agent response)
-  final void Function({required String message, required Role source})? onMessage;
+  final void Function({required String message, required Role source})?
+  onMessage;
 
   /// Called when the conversation mode changes (listening/speaking)
   final void Function({required ConversationMode mode})? onModeChange;
@@ -62,13 +63,16 @@ class ConversationCallbacks {
   final void Function()? onEndCallRequested;
 
   /// Called when a tentative user transcript is received (real-time transcription)
-  final void Function({required String transcript, required int eventId})? onTentativeUserTranscript;
+  final void Function({required String transcript, required int eventId})?
+  onTentativeUserTranscript;
 
   /// Called when a user transcript is finalized
-  final void Function({required String transcript, required int eventId})? onUserTranscript;
+  final void Function({required String transcript, required int eventId})?
+  onUserTranscript;
 
   /// Called when an agent response correction is received
-  final void Function(Map<String, dynamic> correction)? onAgentResponseCorrection;
+  final void Function(Map<String, dynamic> correction)?
+  onAgentResponseCorrection;
 
   /// Called when a tentative agent response is received (streaming text)
   final void Function({required String response})? onTentativeAgentResponse;
@@ -99,4 +103,3 @@ class ConversationCallbacks {
     this.onTentativeAgentResponse,
   });
 }
-

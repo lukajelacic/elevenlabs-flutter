@@ -18,23 +18,15 @@ class ClientToolResult {
   /// Error message if execution failed
   final String? error;
 
-  ClientToolResult._({
-    required this.success,
-    this.data,
-    this.error,
-  });
+  ClientToolResult._({required this.success, this.data, this.error});
 
   /// Creates a successful result
-  factory ClientToolResult.success(dynamic data) => ClientToolResult._(
-        success: true,
-        data: data,
-      );
+  factory ClientToolResult.success(dynamic data) =>
+      ClientToolResult._(success: true, data: data);
 
   /// Creates a failure result
-  factory ClientToolResult.failure(String error) => ClientToolResult._(
-        success: false,
-        error: error,
-      );
+  factory ClientToolResult.failure(String error) =>
+      ClientToolResult._(success: false, error: error);
 
   /// Converts to JSON for sending to the agent
   Map<String, dynamic> toJson() {
@@ -45,4 +37,3 @@ class ClientToolResult {
     };
   }
 }
-

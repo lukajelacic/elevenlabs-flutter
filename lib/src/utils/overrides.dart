@@ -10,12 +10,8 @@ Map<String, dynamic> constructOverrides(ConversationConfig config) {
       'language': overrides?.agent?.language,
       'prompt': overrides?.agent?.prompt,
     },
-    'conversation': {
-      'text_only': overrides?.conversation?.textOnly,
-    },
-    'tts': {
-      'voice_id': overrides?.tts?.voiceId,
-    },
+    'conversation': {'text_only': overrides?.conversation?.textOnly},
+    'tts': {'voice_id': overrides?.tts?.voiceId},
   };
 
   final overridesEvent = <String, dynamic>{
@@ -39,4 +35,3 @@ Map<String, dynamic> constructOverrides(ConversationConfig config) {
 
   return overridesEvent;
 }
-

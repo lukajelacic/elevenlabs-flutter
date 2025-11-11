@@ -10,7 +10,8 @@ class LiveKitManager {
   bool _lastSpeakingState = false;
 
   /// Stream controller for incoming data messages
-  final _dataStreamController = StreamController<Map<String, dynamic>>.broadcast();
+  final _dataStreamController =
+      StreamController<Map<String, dynamic>>.broadcast();
 
   /// Stream of incoming data messages
   Stream<Map<String, dynamic>> get dataStream => _dataStreamController.stream;
@@ -37,7 +38,8 @@ class LiveKitManager {
   Room? get room => _room;
 
   /// Whether the microphone is muted
-  bool get isMuted => !(_room?.localParticipant?.isMicrophoneEnabled() ?? false);
+  bool get isMuted =>
+      !(_room?.localParticipant?.isMicrophoneEnabled() ?? false);
 
   /// Connects to a LiveKit server
   Future<void> connect(String serverUrl, String token) async {
@@ -48,7 +50,7 @@ class LiveKitManager {
       final roomOptions = RoomOptions(
         defaultAudioPublishOptions: AudioPublishOptions(
           audioBitrate: AudioPreset.speech,
-        )
+        ),
       );
 
       // Create room
@@ -107,7 +109,7 @@ class LiveKitManager {
         ..on<ActiveSpeakersChangedEvent>((event) {
           // Check if agent is in the active speakers list
           final agentIsSpeaking = event.speakers.any(
-            (speaker) => speaker.identity.startsWith('agent-')
+            (speaker) => speaker.identity.startsWith('agent-'),
           );
           _handleSpeakingStateChange(agentIsSpeaking);
         });
@@ -125,23 +127,22 @@ class LiveKitManager {
       }
 
       // Enable microphone (LiveKit handles track creation automatically)
-      await _room!.localParticipant?.setMicrophoneEnabled(true, audioCaptureOptions: AudioCaptureOptions(
-        echoCancellation: true,
-        noiseSuppression: true,
-        autoGainControl: true,
-      ));
+      await _room!.localParticipant?.setMicrophoneEnabled(
+        true,
+        audioCaptureOptions: AudioCaptureOptions(
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        ),
+      );
 
       // Emit room ready event - connection is fully established and ready for messages
       _roomReadyController.add(null);
-
     } catch (e) {
-      _dataStreamController.addError(
-        Exception('LiveKit Connection Error: $e'),
-      );
+      _dataStreamController.addError(Exception('LiveKit Connection Error: $e'));
       rethrow;
     }
   }
-
 
   /// Sends a data message to the room
   Future<void> sendMessage(Map<String, dynamic> message) async {
@@ -154,14 +155,9 @@ class LiveKitManager {
       final encoded = jsonEncode(message);
       final bytes = utf8.encode(encoded);
 
-      await currentRoom.localParticipant?.publishData(
-        bytes,
-        reliable: true,
-      );
+      await currentRoom.localParticipant?.publishData(bytes, reliable: true);
     } catch (e) {
-      _dataStreamController.addError(
-        Exception('Failed to send message: $e'),
-      );
+      _dataStreamController.addError(Exception('Failed to send message: $e'));
       rethrow;
     }
   }
@@ -173,7 +169,8 @@ class LiveKitManager {
 
   /// Toggles the microphone mute state
   Future<void> toggleMute() async {
-    final currentlyEnabled = _room?.localParticipant?.isMicrophoneEnabled() ?? false;
+    final currentlyEnabled =
+        _room?.localParticipant?.isMicrophoneEnabled() ?? false;
     await _room?.localParticipant?.setMicrophoneEnabled(!currentlyEnabled);
   }
 
@@ -232,9 +229,7 @@ class LiveKitManager {
       try {
         await currentRoom.dispose();
       } catch (e) {
-        _dataStreamController.addError(
-          Exception('Error disposing room: $e'),
-        );
+        _dataStreamController.addError(Exception('Error disposing room: $e'));
       }
 
       _room = null;
@@ -250,4 +245,3 @@ class LiveKitManager {
     await disconnect();
   }
 }
-

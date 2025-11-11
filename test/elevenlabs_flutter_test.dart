@@ -44,11 +44,7 @@ void main() {
     test('can be created with client tools', () {
       final testTool = TestClientTool();
 
-      final client = ConversationClient(
-        clientTools: {
-          'testTool': testTool,
-        },
-      );
+      final client = ConversationClient(clientTools: {'testTool': testTool});
 
       expect(client.status, ConversationStatus.disconnected);
       client.dispose();
@@ -76,10 +72,7 @@ void main() {
     test('requires agentId or conversationToken', () {
       final client = ConversationClient();
 
-      expect(
-        () => client.startSession(),
-        throwsArgumentError,
-      );
+      expect(() => client.startSession(), throwsArgumentError);
 
       client.dispose();
     });
@@ -116,10 +109,7 @@ void main() {
         ),
       );
 
-      final dynamicVars = {
-        'user_name': 'Alice',
-        'tier': 'premium',
-      };
+      final dynamicVars = {'user_name': 'Alice', 'tier': 'premium'};
 
       expect(overrides, isNotNull);
       expect(overrides.agent, isNotNull);
@@ -223,10 +213,7 @@ void main() {
       expect(client.status, ConversationStatus.disconnected);
 
       // Should throw StateError when not connected
-      expect(
-        () => client.sendUserMessage('Hello'),
-        throwsStateError,
-      );
+      expect(() => client.sendUserMessage('Hello'), throwsStateError);
 
       client.dispose();
     });
@@ -251,10 +238,7 @@ void main() {
       expect(client.status, ConversationStatus.disconnected);
 
       // Should throw StateError when not connected
-      expect(
-        () => client.sendUserActivity(),
-        throwsStateError,
-      );
+      expect(() => client.sendUserActivity(), throwsStateError);
 
       client.dispose();
     });
@@ -266,10 +250,7 @@ void main() {
       expect(client.canSendFeedback, false);
 
       // Should throw StateError when not connected
-      expect(
-        () => client.sendFeedback(isPositive: true),
-        throwsStateError,
-      );
+      expect(() => client.sendFeedback(isPositive: true), throwsStateError);
 
       client.dispose();
     });
@@ -318,16 +299,12 @@ void main() {
     });
   });
 
-
   group('ConversationClient - Client Tools', () {
     test('client tools can be registered', () {
       final testTool = TestClientTool();
 
       final client = ConversationClient(
-        clientTools: {
-          'testTool': testTool,
-          'anotherTool': AnotherTestTool(),
-        },
+        clientTools: {'testTool': testTool, 'anotherTool': AnotherTestTool()},
       );
 
       expect(client.status, ConversationStatus.disconnected);
@@ -372,10 +349,7 @@ void main() {
       });
 
       final failureResult = ClientToolResult.failure('Error');
-      expect(failureResult.toJson(), {
-        'success': false,
-        'error': 'Error',
-      });
+      expect(failureResult.toJson(), {'success': false, 'error': 'Error'});
     });
   });
 
@@ -395,10 +369,7 @@ void main() {
       final config = ConversationConfig(
         agentId: 'test-agent',
         overrides: ConversationOverrides(
-          agent: AgentOverrides(
-            firstMessage: 'Hello!',
-            temperature: 0.7,
-          ),
+          agent: AgentOverrides(firstMessage: 'Hello!', temperature: 0.7),
         ),
       );
 
@@ -411,10 +382,7 @@ void main() {
     test('includes dynamic variables in JSON', () {
       final config = ConversationConfig(
         agentId: 'test-agent',
-        dynamicVariables: {
-          'user_name': 'Alice',
-          'tier': 'premium',
-        },
+        dynamicVariables: {'user_name': 'Alice', 'tier': 'premium'},
       );
 
       final json = config.toJson();
@@ -426,10 +394,7 @@ void main() {
     test('includes custom LLM extra body in JSON', () {
       final config = ConversationConfig(
         agentId: 'test-agent',
-        customLlmExtraBody: {
-          'top_p': 0.9,
-          'frequency_penalty': 0.5,
-        },
+        customLlmExtraBody: {'top_p': 0.9, 'frequency_penalty': 0.5},
       );
 
       final json = config.toJson();
@@ -497,7 +462,6 @@ void main() {
       expect(json['conversation']['text_only'], true);
     });
   });
-
 }
 
 // Test implementations of ClientTool for testing
@@ -532,4 +496,3 @@ class FireAndForgetTool implements ClientTool {
     return null;
   }
 }
-

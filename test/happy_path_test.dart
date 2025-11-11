@@ -6,47 +6,50 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Happy Path - Session Start with AgentId', () {
-    test('successfully starts session and transitions through states', () async {
-      final statuses = <ConversationStatus>[];
-      String? connectedConversationId;
+    test(
+      'successfully starts session and transitions through states',
+      () async {
+        final statuses = <ConversationStatus>[];
+        String? connectedConversationId;
 
-      final client = TestableConversationClient(
-        callbacks: ConversationCallbacks(
-          onStatusChange: ({required status}) {
-            statuses.add(status);
-          },
-          onConnect: ({required conversationId}) {
-            connectedConversationId = conversationId;
-          },
-        ),
-      );
+        final client = TestableConversationClient(
+          callbacks: ConversationCallbacks(
+            onStatusChange: ({required status}) {
+              statuses.add(status);
+            },
+            onConnect: ({required conversationId}) {
+              connectedConversationId = conversationId;
+            },
+          ),
+        );
 
-      // Initial state
-      expect(client.status, ConversationStatus.disconnected);
-      expect(client.isMuted, true);
-      expect(client.conversationId, null);
+        // Initial state
+        expect(client.status, ConversationStatus.disconnected);
+        expect(client.isMuted, true);
+        expect(client.conversationId, null);
 
-      // Start session with agentId
-      await client.startSession(
-        agentId: 'test-agent-123',
-        userId: 'user-456',
-      );
+        // Start session with agentId
+        await client.startSession(
+          agentId: 'test-agent-123',
+          userId: 'user-456',
+        );
 
-      // Verify state transitions
-      expect(statuses, [
-        ConversationStatus.connecting,
-        ConversationStatus.connected,
-      ]);
+        // Verify state transitions
+        expect(statuses, [
+          ConversationStatus.connecting,
+          ConversationStatus.connected,
+        ]);
 
-      // Verify final state
-      expect(client.status, ConversationStatus.connected);
-      expect(client.conversationId, isNotNull);
-      expect(connectedConversationId, equals(client.conversationId));
-      expect(client.isMuted, false);
+        // Verify final state
+        expect(client.status, ConversationStatus.connected);
+        expect(client.conversationId, isNotNull);
+        expect(connectedConversationId, equals(client.conversationId));
+        expect(client.isMuted, false);
 
-      await client.endSession();
-      client.dispose();
-    });
+        await client.endSession();
+        client.dispose();
+      },
+    );
 
     test('successfully starts session with token', () async {
       final statuses = <ConversationStatus>[];
@@ -97,20 +100,14 @@ void main() {
           prompt: 'You are a helpful assistant',
           temperature: 0.7,
         ),
-        tts: TtsOverrides(
-          voiceId: 'voice-123',
-          stability: 0.5,
-        ),
+        tts: TtsOverrides(voiceId: 'voice-123', stability: 0.5),
       );
 
       await client.startSession(
         agentId: 'test-agent',
         userId: 'user-123',
         overrides: overrides,
-        dynamicVariables: {
-          'user_name': 'Alice',
-          'tier': 'premium',
-        },
+        dynamicVariables: {'user_name': 'Alice', 'tier': 'premium'},
       );
 
       expect(events, contains('status:connecting'));
@@ -166,9 +163,7 @@ void main() {
       final sentMessages = <Map<String, dynamic>>[];
       final mockLiveKit = MockLiveKitManager();
 
-      final client = TestableConversationClient(
-        liveKitManager: mockLiveKit,
-      );
+      final client = TestableConversationClient(liveKitManager: mockLiveKit);
 
       mockLiveKit.messagesStream.listen(sentMessages.add);
       await client.startSession(conversationToken: 'test-token');
@@ -188,9 +183,7 @@ void main() {
       final sentMessages = <Map<String, dynamic>>[];
       final mockLiveKit = MockLiveKitManager();
 
-      final client = TestableConversationClient(
-        liveKitManager: mockLiveKit,
-      );
+      final client = TestableConversationClient(liveKitManager: mockLiveKit);
 
       mockLiveKit.messagesStream.listen(sentMessages.add);
       await client.startSession(conversationToken: 'test-token');
@@ -209,9 +202,7 @@ void main() {
       final sentMessages = <Map<String, dynamic>>[];
       final mockLiveKit = MockLiveKitManager();
 
-      final client = TestableConversationClient(
-        liveKitManager: mockLiveKit,
-      );
+      final client = TestableConversationClient(liveKitManager: mockLiveKit);
 
       mockLiveKit.messagesStream.listen(sentMessages.add);
       await client.startSession(conversationToken: 'test-token');
@@ -323,10 +314,7 @@ void main() {
       );
 
       // Start
-      await client.startSession(
-        agentId: 'test-agent',
-        userId: 'user-123',
-      );
+      await client.startSession(agentId: 'test-agent', userId: 'user-123');
 
       expect(events, contains('status:connecting'));
       expect(events, contains('status:connected'));
@@ -433,4 +421,3 @@ void main() {
     });
   });
 }
-
