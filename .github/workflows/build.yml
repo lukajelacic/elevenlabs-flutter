@@ -2,9 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: main
+    branches: [main]
   pull_request:
-    branches: main
+    branches: [main]
 
 jobs:
   build:
@@ -40,6 +40,9 @@ jobs:
 
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
+
+      - name: Create .env for analysis
+        run: touch example/.env
 
       - name: Analyze project source
         run: flutter analyze
