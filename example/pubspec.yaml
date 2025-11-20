@@ -24,4 +24,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/elevenlabs_logo.png
+    - .env
 
