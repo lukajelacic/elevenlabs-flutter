@@ -51,8 +51,5 @@ jobs:
       - name: Check package publish readiness
         run: dart pub publish --dry-run
 
-      - name: Publish to pub.dev
-        uses: dart-lang/setup-dart@v1
-
       - name: Publish package
         run: dart pub publish --force
